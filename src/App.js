@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import Data from "./Data";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import { useState } from "react";
+import { auth, provider } from "./firebase";
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  const sigIn = () => {
+    auth
+      .signInWithPopup(provider)
+      .then(({ user }) => {
+        setUser(user);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {user ? (
+        <>
+          <Header photoURL={user.photoURL} />
+          <div className="App">
+            <Sidebar />
+            <Data />
+          </div>
+        </>
+      ) : (
+        <div className="login">
+          <img
+            src="https://assets.99sme.sg/images/detailed/512/logo_lockup_drive_icon_vertical.png"
+            alt="img"
+            width="200px"
+          />
+          <button onClick={sigIn}>Login</button>
+        </div>
+      )}
+    </>
   );
 }
 
