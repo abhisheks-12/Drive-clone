@@ -1,8 +1,8 @@
-import Data from "./Data";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import Data from "./Comps/Data/Data";
+import Header from "./Comps/Header/Header";
+import Sidebar from "./Comps/Sidebar/Sidebar";
 import { useState } from "react";
-import { auth, provider } from "./firebase";
+import { auth, provider } from "./Firebase/firebase";
 
 function App() {
   const [user, setUser] = useState(null);
